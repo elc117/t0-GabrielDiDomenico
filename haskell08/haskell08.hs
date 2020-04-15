@@ -1,6 +1,7 @@
 -- Autor: Gabriel Di Domenico
 -- Data: 15/04/2020
 import Data.List
+import Data.Char
 -- 1. Escreva uma função recursiva isBin :: String -> Bool para verificar se uma dada String representa um número binário, ou seja, contém apenas caracteres '0' ou '1'.
 -- As únicas funções pré-definidas autorizadas aqui são head e tail.
 
@@ -97,3 +98,75 @@ isHex ""  = False
 isHex str
     | checaNumHex(head str) = False
     | otherwise          = isHex (tail str)
+
+
+auxHex2Dec :: String -> Int -> Int
+auxHex2Dec "0" 0= 0
+auxHex2Dec "1" 0= 1
+auxHex2Dec "2" 0= 2
+auxHex2Dec "3" 0= 3
+auxHex2Dec "4" 0= 4
+auxHex2Dec "5" 0= 5
+auxHex2Dec "6" 0= 6
+auxHex2Dec "7" 0= 7
+auxHex2Dec "8" 0= 8
+auxHex2Dec "9" 0= 9
+auxHex2Dec "A" 0= 10
+auxHex2Dec "B" 0= 11
+auxHex2Dec "C" 0= 12
+auxHex2Dec "D" 0= 13
+auxHex2Dec "E" 0= 14
+auxHex2Dec "F" 0= 15
+auxHex2Dec list exp = (digitToInt (head list))*16^exp + auxHex2Dec (tail list) (exp-1)
+
+hex2dec :: String -> Int
+hex2dec "" = undefined
+hex2dec str = auxHex2Dec str ((length str)-1)
+
+charToString :: Char -> String
+charToString c = [c]
+
+auxDec2Hex :: Int -> String
+auxDec2Hex 0 = "0"
+auxDec2Hex 1 = "1"
+auxDec2Hex 2 = "2"
+auxDec2Hex 3 = "3"
+auxDec2Hex 4 = "4"
+auxDec2Hex 5 = "5"
+auxDec2Hex 6 = "6"
+auxDec2Hex 7 = "7"
+auxDec2Hex 8 = "8"
+auxDec2Hex 9 = "9"
+auxDec2Hex 10 = "A"
+auxDec2Hex 11 = "B"
+auxDec2Hex 12 = "C"
+auxDec2Hex 13 = "D"
+auxDec2Hex 14 = "E"
+auxDec2Hex 15 = "F"
+auxDec2Hex num
+    | (num `mod` 16)<10 = (charToString(intToDigit(num `mod` 16)))++auxDec2Hex (num `div` 16) 
+    | (num `mod` 16) == 10 = "A"++auxDec2Hex (num `div` 16)
+    | (num `mod` 16) == 11 = "B"++auxDec2Hex (num `div` 16)
+    | (num `mod` 16) == 12 = "C"++auxDec2Hex (num `div` 16)
+    | (num `mod` 16) == 13 = "D"++auxDec2Hex (num `div` 16)
+    | (num `mod` 16) == 14 = "E"++auxDec2Hex (num `div` 16)
+    | (num `mod` 16) == 15 = "F"++auxDec2Hex (num `div` 16)
+
+dec2hex :: Int -> String
+dec2hex 0 = "0"
+dec2hex 1 = "1"
+dec2hex 2 = "2"
+dec2hex 3 = "3"
+dec2hex 4 = "4"
+dec2hex 5 = "5"
+dec2hex 6 = "6"
+dec2hex 7 = "7"
+dec2hex 8 = "8"
+dec2hex 9 = "9"
+dec2hex 10 = "A"
+dec2hex 11 = "B"
+dec2hex 12 = "C"
+dec2hex 13 = "D"
+dec2hex 14 = "E"
+dec2hex 15 = "F"
+dec2hex num = reverse (auxDec2Hex num)

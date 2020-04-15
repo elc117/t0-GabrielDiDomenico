@@ -73,8 +73,7 @@ dec2bin num = reverse (auxDec2Bin num)
 
 checaNumHex :: Char -> Bool
 checaNumHex num
-    | num == '0' || num == '1' || num == '2' || num == '3' || num == '4' || num == '5' || num == '6' || num == '7' || num == '8' || num == '9' || num == 'A'
-      || num == 'B' || num == 'C' || num == 'D' || num == 'E' || num == 'F' = False
+    | elem num "0123456789ABCDEF" = False
     | otherwise = True
 
 isHex :: String -> Bool
@@ -94,6 +93,7 @@ isHex "C" = True
 isHex "D" = True
 isHex "E" = True
 isHex "F" = True
+isHex ""  = False
 isHex str
     | checaNumHex(head str) = False
     | otherwise          = isHex (tail str)
